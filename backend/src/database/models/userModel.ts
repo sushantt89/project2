@@ -17,24 +17,29 @@ class User extends Model {
 
     // Define the 'username' column
     @Column({
-        type: DataType.STRING, 
+        type: DataType.STRING,
     })
-    declare username: string; 
+    declare username: string;
 
     // Define the 'email' column
     @Column({
-        type: DataType.STRING, 
+        type: DataType.STRING,
     })
-    declare email: string; 
+    declare email: string;
 
+    @Column({
+        type: DataType.ENUM('customer', 'admin'),
+        defaultValue: 'customer'
+    })
+    declare role: string;
     // Define the 'password' column
     @Column({
-        type: DataType.STRING, 
+        type: DataType.STRING,
     })
-    declare password: string; 
+    declare password: string;
 }
 
-export default User; 
+export default User;
 
 /* 
 # Notes:
