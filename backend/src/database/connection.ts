@@ -1,6 +1,8 @@
 // Import necessary modules from sequelize-typescript and dotenv
 import { Sequelize } from "sequelize-typescript";
 import dotenv from 'dotenv';
+import User from "./models/userModel";
+import Product from "./models/productModel";
 
 // Load environment variables from the .env file
 // This allows us to use variables like DB_NAME, DB_USERNAME, etc. in our code
@@ -33,6 +35,9 @@ sequelize.authenticate()
 sequelize.sync({ force: false }).then(() => {
     console.log("Database synced!"); // Print this message once synchronization is complete
 });
+
+User.hasMany(Product, { foreignKey: 'userId' });
+Product.belongsTo(User, { foreignKey: 'userId' })
 
 // Export the Sequelize instance so it can be used in other parts of the application
 export default sequelize;

@@ -29,6 +29,12 @@ class Product extends Model {
     declare price: number;
 
     @Column({
+        type: DataType.INTEGER, // Corrected data type for price
+    })
+    declare stockQty: number;
+
+
+    @Column({
         type: DataType.TEXT, // Changed to TEXT to handle long URLs
     })
     declare photoURL: string;
