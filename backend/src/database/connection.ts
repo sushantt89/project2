@@ -1,9 +1,10 @@
 // Import necessary modules from sequelize-typescript and dotenv
-import { Sequelize } from "sequelize-typescript";
+import { ForeignKey, Sequelize } from "sequelize-typescript";
 import dotenv from 'dotenv';
 import User from "./models/userModel";
 import Product from "./models/productModel";
 import Category from "./models/categoryModel";
+import Cart from "./models/cartModel";
 
 // Load environment variables from the .env file
 // This allows us to use variables like DB_NAME, DB_USERNAME, etc. in our code
@@ -33,7 +34,7 @@ sequelize.authenticate()
 
 // Sync the database (create tables if they do not exist, but do not drop existing tables)
 // The force: false option means it will not drop tables if they already exist
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
     console.log("Database synced!"); // Print this message once synchronization is complete
 });
 
@@ -43,5 +44,11 @@ Product.belongsTo(User, { foreignKey: 'userId' })
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Category.hasMany(Product, { foreignKey: 'categoryId' })
 
+
+Cart.belongsTo(Product, { foreignKey: 'productId' })
+Product.hasMany(Cart, { foreignKey: 'productId' })
+
+Cart.belongsTo(User, { foreignKey: 'userId' })
+User.hasMany(Cart, { foreignKey: 'userId' })
 // Export the Sequelize instance so it can be used in other parts of the application
 export default sequelize;
